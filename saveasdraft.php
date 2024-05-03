@@ -91,17 +91,8 @@ function getDraftStatusID(){
 }
 
 function getSelectedStatusID(){
-  $settings = [];
-        
-  $sql = "SELECT * FROM civicrm_save_as_draft";
-  $result = CRM_Core_DAO::executeQuery($sql, CRM_Core_DAO::$_nullArray);
-
-  while ($result->fetch()) {
-      // Store each setting in the associative array.
-      $settings[$result->param_name] = $result->param_value;
-  }
-
-  return $settings['selected_status'];
+  $selected_status = Civi::settings()->get('activity_status'); 
+  return $selected_status;
 }
 
 
@@ -212,16 +203,16 @@ function saveasdraft_civicrm_pre($op, $objectName, $id, &$params) {
 /**
  * Implements hook_civicrm_navigationMenu().
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_navigationMenu
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_navigationMenu
  */
 function saveasdraft_civicrm_navigationMenu(&$menu) {
-  _saveasdraft_civix_insert_navigation_menu($menu, 'Administer/System Settings', array(
-    'label' => ts('Save as Draft Settings'),
+  _saveasdraft_civix_insert_navigation_menu($menu, "Administer/System Settings", [
+    'label' => ts('Save as Draft Settings', ['domain' => 'saveasdraft']),
     'name' => 'save_as_draft',
-    'url' => 'civicrm/saveasdraft?reset=1',
+    'url' => 'civicrm/saveasdraftsettings?reset=1',
     'permission' => 'administer CiviCRM',
     'operator' => 'OR',
     'separator' => 0,
-  ));
+  ]);
   _saveasdraft_civix_navigationMenu($menu);
-}
+} 
