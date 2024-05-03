@@ -37,5 +37,4 @@
     <mixin>entity-types-php@1.0.0</mixin>
     <mixin>menu-xml@1.0.0</mixin>
   </mixins>
-  <upgrader>CRM_Saveasdraft_Upgrader</upgrader>
 </extension>
